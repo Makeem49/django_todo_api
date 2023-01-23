@@ -10,7 +10,7 @@ from .models import Todo
 # Create your views here.
 
 @api_view(['GET'])
-def create_todo(request):
+def get_todo(request):
     """
     DRF views
     """
@@ -23,3 +23,16 @@ def create_todo(request):
 
         
     return Response(data) # converting to json format and send o client 
+
+
+@api_view(['POST'])
+def create_todo(request):
+    """DRF view"""
+    serializer = TodoSerializer(data=request.data)
+
+    if serializer.is_valid():
+        instance = serializer.save()
+        # data = request.data
+        print(serializer)
+        return Response(serializer.data)
+    return Response({"message" : "invalid data"})
