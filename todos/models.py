@@ -13,3 +13,13 @@ class Todo(models.Model):
     completed_at = models.TimeField( null=True, blank=True)
     is_suspended = models.BooleanField(null=True, blank=True, default=False)
     is_completed = models.BooleanField(null=True, blank=True, default=False)
+
+    def is_done(self):
+        return self.is_completed
+
+    @property
+    def get_target_time(self):
+        if self.target_time is None:
+            return 'Target not set yet.'
+        return self.target_time
+
