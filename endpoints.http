@@ -1,22 +1,45 @@
-# TODO RESTAPI ENDPOINT
-
+# TODO ENDPOINTS 
+# endpoint to get a particular todo 
 ###
-GET http://127.0.0.1:8000/?abc=23&xyz=helloworld
-
-{
-    "name" : "john"
-}
+GET http://127.0.0.1:8000/api/todos/12
 
 
-# todos 
-
+# endpoint to delete a particular todo 
 ###
-GET http://127.0.0.1:8000/todos/
+DELETE  http://127.0.0.1:8000/api/todos/12/delete/
 
+
+# endpoint to update a particular todo 
 ###
-POST http://127.0.0.1:8000/todos/create/
+PUT http://127.0.0.1:8000/api/todos/2/update/
 Content-Type: application/json
 
 {
-    "name" : "grocery"
+    "name" : "grocery and market",
+    "target_time" : "03:30"
 }
+
+# endpoint to create a todo task 
+###
+POST http://127.0.0.1:8000/api/todos/create/
+Content-Type:  application/json
+
+{
+    "name" : "school"
+}
+
+
+# endpoint to get all todos 
+###
+GET http://127.0.0.1:8000/api/todos/
+
+
+# endpoint to get all todos or create todo 
+###
+POST http://127.0.0.1:8000/api/todos/create_or_get/
+Content-Type: application/json
+
+{
+    "name" : "market or library"
+}
+
