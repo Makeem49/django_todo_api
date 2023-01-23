@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions, authentication
 
 from .models import Todo
 from .serializers import TodoSerializer
@@ -45,6 +45,8 @@ class TodoDeleteAPIView(generics.DestroyAPIView):
 class TodoListAPIView(generics.ListAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 # Alternative method to creating separating list and create api view wil be to use listcreateapi view 
