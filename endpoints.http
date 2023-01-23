@@ -6,3 +6,9 @@ GET http://127.0.0.1:8000/?abc=23&xyz=helloworld
 {
     "name" : "john"
 }
+
+
+# todos 
+
+###
+GET http://127.0.0.1:8000/todos/
