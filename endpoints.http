@@ -1,12 +1,12 @@
 # TODO ENDPOINTS 
 # endpoint to get a particular todo 
 ###
-GET http://127.0.0.1:8000/api/todos/12
+GET http://127.0.0.1:8000/api/todos/2
 
 
 # endpoint to delete a particular todo 
 ###
-DELETE  http://127.0.0.1:8000/api/todos/12/delete/
+DELETE  http://127.0.0.1:8000/api/todos/15/delete/
 
 
 # endpoint to update a particular todo 
@@ -15,8 +15,8 @@ PUT http://127.0.0.1:8000/api/todos/2/update/
 Content-Type: application/json
 
 {
-    "name" : "grocery and market",
-    "target_time" : "03:30"
+    "name" : "grocery ",
+    "target_time" : "03:00"
 }
 
 # endpoint to create a todo task 
@@ -25,7 +25,7 @@ POST http://127.0.0.1:8000/api/todos/create/
 Content-Type:  application/json
 
 {
-    "name" : "school"
+    "name" : "club"
 }
 
 
