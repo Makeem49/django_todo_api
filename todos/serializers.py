@@ -6,17 +6,18 @@ class TodoSerializer(serializers.ModelSerializer):
     """Method and properties can be specified in this class and also 
     format it properly
     """
-    done = serializers.SerializerMethodField(read_only=True) 
+    completed = serializers.SerializerMethodField(read_only=True) 
     class Meta:
         model = Todo
         fields = [
             "name",
             "created_at",
-            "get_target_time",
-            "done"
+            "target_time",
+            "completed",
+            "is_done"
         ]
 
-    def get_done(self, obj):
+    def get_completed(self, obj):
         if hasattr(obj, "id"):
             return obj.is_completed
-        return False
+        return None
