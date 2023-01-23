@@ -17,5 +17,6 @@ class TodoSerializer(serializers.ModelSerializer):
         ]
 
     def get_done(self, obj):
-        # print(obj)
-        return obj.is_completed
+        if hasattr(obj, "id"):
+            return obj.is_completed
+        return False
