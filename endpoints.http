@@ -1,5 +1,8 @@
 # TODO RESTAPI ENDPOINT
 
 ###
-GET http://127.0.0.1:8000/
+GET http://127.0.0.1:8000/?abc=23&xyz=helloworld
 
+{
+    "name" : "john"
+}
