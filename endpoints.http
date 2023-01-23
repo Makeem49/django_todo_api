@@ -12,3 +12,11 @@ GET http://127.0.0.1:8000/?abc=23&xyz=helloworld
 
 ###
 GET http://127.0.0.1:8000/todos/
+
+###
+POST http://127.0.0.1:8000/todos/create/
+Content-Type: application/json
+
+{
+    "name" : "grocery"
+}
