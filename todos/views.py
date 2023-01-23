@@ -9,15 +9,15 @@ from .models import Todo
 
 @api_view(['GET'])
 def create_todo(request):
-    """The process of converting a model instance 
-    to a dictionary and later to json format is called serialization. 
+    """
+    DRF views
     """
     model_instance = Todo.objects.all().order_by("?").first()
 
     data = {}
     if model_instance:
         # serializing to dictionary format 
-        data = model_to_dict(model_instance, fields=['name', 'created_at'])
+        data = model_to_dict(model_instance, fields=['name', 'created_at', 'start_at'])
 
         
     return Response(data) # converting to json format and send o client 
