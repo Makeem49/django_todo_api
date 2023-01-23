@@ -17,9 +17,3 @@ class Todo(models.Model):
     def is_done(self):
         return self.is_completed
 
-    @property
-    def get_target_time(self):
-        if self.target_time is None:
-            return 'Target not set yet.'
-        return self.target_time
-
