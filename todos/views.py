@@ -1,38 +1,68 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-from .serializers import TodoSerializer
+from rest_framework import generics
 
 from .models import Todo
-# Create your views here.
+from .serializers import TodoSerializer
 
-@api_view(['GET'])
-def get_todo(request):
+class TodoCreateAPIView(generics.CreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+    def perform_create(self, serializer):
+        print(serializer.validated_data.get("target_time"))
+        if serializer.validated_data.get("target_time") is None:
+            time = "01:00"
+
+        serializer.save(target_time=time)
+        return super().perform_create(serializer)
+
+
+class TodoDetailAPIView(generics.RetrieveAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    lookup_field = 'pk'
+
+
+class TodoUpdateAPIView(generics.UpdateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    lookup_field = 'pk'
+
+    def perform_update(self, serializer):
+        # time = serializer.validated_data.get('get_time')
+        return super().perform_update(serializer)
+
+
+class TodoDeleteAPIView(generics.DestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    lookup_field = 'pk'
+
+    def perform_destroy(self, instance):
+        print(instance)
+        return super().perform_destroy(instance)
+
+
+class TodoListAPIView(generics.ListAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+
+# Alternative method to creating separating list and create api view wil be to use listcreateapi view 
+
+class TodoListCreateAPIView(generics.ListCreateAPIView):
     """
-    DRF views
-    """
-    instance = Todo.objects.all().order_by("?").first()
+    Will behave both as generics.CreateAPIView if post method
+    and generics.ListAPIView if post method is get. 
+     
+     """
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
 
-    data = {}
-    if instance:
-        # serializing to dictionary format 
-        data = TodoSerializer(instance).data
+    def perform_create(self, serializer):
+        # print(serializer.validated_data.get("target_time"))
+        time = serializer.validated_data.get("target_time", None)
+        if serializer.validated_data.get("target_time") is None:
+            time = "01:00"
 
-        
-    return Response(data) # converting to json format and send o client 
-
-
-@api_view(['POST'])
-def create_todo(request):
-    """DRF view"""
-    serializer = TodoSerializer(data=request.data)
-
-    if serializer.is_valid():
-        instance = serializer.save()
-        # data = request.data
-        print(serializer)
-        return Response(serializer.data)
-    return Response({"message" : "invalid data"})
+        serializer.save(target_time=time)
+        return super().perform_create(serializer)
