@@ -1,7 +1,7 @@
 # TODO ENDPOINTS 
 # endpoint to get a particular todo 
 ###
-GET http://127.0.0.1:8000/api/todos/12
+GET http://127.0.0.1:8000/api/todos/1
 
 
 # endpoint to delete a particular todo 
