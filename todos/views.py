@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 from .models import Todo
 # Create your views here.
@@ -14,14 +15,7 @@ def create_todo(request):
     data = {}
     if model_instance:
         # serializing to dictionary format 
-        data['name'] = model_instance.name
-        data['created_at'] = model_instance.created_at
-        data['target_time'] = model_instance.target_time
-        data['duration'] = model_instance.duration
-        data['start_at'] = model_instance.start_at
-        data['completed_at'] = model_instance.completed_at
-        data['is_suspended'] = model_instance.is_suspended
-        data['is_completed'] = model_instance.is_completed
+        data = model_to_dict(model_instance, fields=['name', 'created_at'])
 
         
     return JsonResponse(data) # converting to json format and send o client 
