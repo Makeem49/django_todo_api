@@ -21,7 +21,7 @@ class TodoDetailAPIView(generics.RetrieveAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
-    authentication_classes = [authentication.SessionAuthentication]
+    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsStaffEdit, permissions.IsAuthenticated]
 
 

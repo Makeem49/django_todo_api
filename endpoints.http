@@ -2,7 +2,7 @@
 # endpoint to get a particular todo 
 ###
 GET http://127.0.0.1:8000/api/todos/1
-
+Authorization: Token 431f64eaabb6ecbd33edb85aad0e68321e36fb83
 
 # endpoint to delete a particular todo 
 ###
@@ -43,3 +43,12 @@ Content-Type: application/json
     "name" : "market or library"
 }
 
+
+###
+POST http://127.0.0.1:8000/api/users/auth/
+Content-Type: application/json
+
+{
+    "username" : "staffuser",
+    "password" : "staffpassword"
+}
