@@ -26,6 +26,8 @@ class TodoUpdateAPIView(generics.UpdateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions]
 
     def perform_update(self, serializer):
         # time = serializer.validated_data.get('get_time')
@@ -45,8 +47,8 @@ class TodoDeleteAPIView(generics.DestroyAPIView):
 class TodoListAPIView(generics.ListAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.SessionAuthentication] #this use session base pattern to authenticate user
+    permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions] # check if the user is authenticated, if not, only allow it to view the item
 
 
 # Alternative method to creating separating list and create api view wil be to use listcreateapi view 
