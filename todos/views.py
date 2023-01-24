@@ -2,6 +2,7 @@ from rest_framework import generics, permissions, authentication
 
 from .models import Todo
 from .serializers import TodoSerializer
+from .permissions import IsStaffEdit
 
 class TodoCreateAPIView(generics.CreateAPIView):
     queryset = Todo.objects.all()
@@ -20,6 +21,8 @@ class TodoDetailAPIView(generics.RetrieveAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [IsStaffEdit, permissions.IsAuthenticated]
 
 
 class TodoUpdateAPIView(generics.UpdateAPIView):
@@ -47,8 +50,8 @@ class TodoDeleteAPIView(generics.DestroyAPIView):
 class TodoListAPIView(generics.ListAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
-    authentication_classes = [authentication.SessionAuthentication] #this use session base pattern to authenticate user
-    permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions] # check if the user is authenticated, if not, only allow it to view the item
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.DjangoModelPermissions,permissions.IsAuthenticatedOrReadOnly]
 
 
 # Alternative method to creating separating list and create api view wil be to use listcreateapi view 
