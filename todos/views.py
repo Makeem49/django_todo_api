@@ -2,9 +2,9 @@ from rest_framework import generics, permissions, authentication
 
 from .models import Todo
 from .serializers import TodoSerializer
-from .permissions import IsStaffEdit
+from .mixins import PermissionStaffEditMixins
 
-class TodoCreateAPIView(generics.CreateAPIView):
+class TodoCreateAPIView(PermissionStaffEditMixins, generics.CreateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
 
@@ -17,28 +17,28 @@ class TodoCreateAPIView(generics.CreateAPIView):
         return super().perform_create(serializer)
 
 
-class TodoDetailAPIView(generics.RetrieveAPIView):
+class TodoDetailAPIView(PermissionStaffEditMixins, generics.RetrieveAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
     # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication] # move to settings 
     # so that all view class can use it. 
-    permission_classes = [IsStaffEdit, permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsStaffEdit, permissions.IsAuthenticatedOrReadOnly] # converted to mixins
 
 
-class TodoUpdateAPIView(generics.UpdateAPIView):
+class TodoUpdateAPIView(PermissionStaffEditMixins, generics.UpdateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
     # authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions]
+    # permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions] # converted to mixins 
 
     def perform_update(self, serializer):
         # time = serializer.validated_data.get('get_time')
         return super().perform_update(serializer)
 
 
-class TodoDeleteAPIView(generics.DestroyAPIView):
+class TodoDeleteAPIView(PermissionStaffEditMixins , generics.DestroyAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
@@ -52,7 +52,7 @@ class TodoListAPIView(generics.ListAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     # authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions,permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.DjangoModelPermissions,permissions.IsAuthenticatedOrReadOnly] # converted to mixins
 
 
 # Alternative method to creating separating list and create api view wil be to use listcreateapi view 
