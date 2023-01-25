@@ -11,8 +11,9 @@ DELETE  http://127.0.0.1:8000/api/todos/12/delete/
 
 # endpoint to update a particular todo 
 ###
-PUT http://127.0.0.1:8000/api/todos/2/update/
+PUT http://127.0.0.1:8000/api/todos/1/update/
 Content-Type: application/json
+Authorization: Token 431f64eaabb6ecbd33edb85aad0e68321e36fb83
 
 {
     "name" : "grocery and market",
