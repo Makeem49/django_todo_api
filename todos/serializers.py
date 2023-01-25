@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from datetime import time 
 
 from .models import Todo
 
@@ -33,3 +34,11 @@ class TodoSerializer(serializers.ModelSerializer):
         if hasattr(obj, "id"):
             return obj.is_completed
         return None
+
+    def validate_name(self, value):
+        request = self.context.get('request')
+        user = request.user
+        qs = Todo.objects.filter(name__iexact=value)
+        if qs.exists():
+            raise serializers.ValidationError(f"{value} is already a product name.")
+        return value
