@@ -21,15 +21,16 @@ class TodoDetailAPIView(generics.RetrieveAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [IsStaffEdit, permissions.IsAuthenticated]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication] # move to settings 
+    # so that all view class can use it. 
+    permission_classes = [IsStaffEdit, permissions.IsAuthenticatedOrReadOnly]
 
 
 class TodoUpdateAPIView(generics.UpdateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     lookup_field = 'pk'
-    authentication_classes = [authentication.SessionAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions]
 
     def perform_update(self, serializer):
@@ -50,7 +51,7 @@ class TodoDeleteAPIView(generics.DestroyAPIView):
 class TodoListAPIView(generics.ListAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
-    authentication_classes = [authentication.SessionAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions,permissions.IsAuthenticatedOrReadOnly]
 
 
