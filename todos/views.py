@@ -9,7 +9,7 @@ class TodoCreateAPIView(PermissionStaffEditMixins, generics.CreateAPIView):
     serializer_class = TodoSerializer
 
     def perform_create(self, serializer):
-        print(serializer.validated_data.get("target_time"))
+        # print(serializer.validated_data.get("target_time"))
         if serializer.validated_data.get("target_time") is None:
             time = "01:00"
 

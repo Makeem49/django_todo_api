@@ -7,9 +7,11 @@ class TodoSerializer(serializers.ModelSerializer):
     format it properly
     """
     completed = serializers.SerializerMethodField(read_only=True) 
+    email = serializers.EmailField(write_only=True)
     class Meta:
         model = Todo
         fields = [
+            "email",
             "name",
             "created_at",
             "target_time",
@@ -21,3 +23,8 @@ class TodoSerializer(serializers.ModelSerializer):
         if hasattr(obj, "id"):
             return obj.is_completed
         return None
+
+    def create(self, validated_data):
+        email = validated_data.pop("email")
+        print(email)
+        return super().create(validated_data)
